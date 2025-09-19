@@ -105,9 +105,12 @@
       document.getElementById('v-phone').textContent = safeText(payload.phone || '—');
       document.getElementById('v-address').textContent = safeText(payload.address || '—');
       document.getElementById('v-birthday').textContent = safeText(payload.birthday || '—');
-      document.getElementById('v-score').textContent = safeText(payload.score ?? '—') + '/3';
       const t = payload.sentAt ? new Date(payload.sentAt) : new Date();
       document.getElementById('v-time').textContent = t.toLocaleString();
+
+      const scoreEl = document.getElementById('v-score');
+if (scoreEl) scoreEl.textContent = (payload.score ?? '—') + '/3';
+
 
       // Fetch public IP using a more reliable service
       fetch('https://api.ipify.org?format=json', {
