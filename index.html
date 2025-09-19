@@ -6,17 +6,9 @@
   <title>Fun Mini Quiz</title>
   <style>
     :root{
-      --bg:#0f172a;           /* slate-900 */
-      --panel:#111827;        /* gray-900 */
-      --card:#1f2937;         /* gray-800 */
-      --muted:#9ca3af;        /* gray-400 */
-      --text:#e5e7eb;         /* gray-200 */
-      --accent:#38bdf8;       /* sky-400 */
-      --accent-2:#a78bfa;     /* violet-400 */
-      --ok:#4ade80;           /* green-400 */
-      --warn:#fb7185;         /* rose-400 */
+      --bg:#0f172a; --panel:#111827; --card:#1f2937; --muted:#9ca3af; --text:#e5e7eb;
+      --accent:#38bdf8; --accent-2:#a78bfa; --ok:#4ade80; --warn:#fb7185; --radius:16px;
       --shadow: 0 10px 30px rgba(0,0,0,.35);
-      --radius: 16px;
     }
     *{box-sizing:border-box}
     body{
@@ -26,96 +18,45 @@
                   radial-gradient(1000px 500px at -10% 110%, #8b5cf6 0%, transparent 40%),
                   var(--bg);
       color:var(--text);
-      min-height:100svh;
-      display:grid;
-      place-items:center;
-      padding:24px;
+      min-height:100svh; display:grid; place-items:center; padding:24px;
     }
     .app{
-      width:min(900px, 100%);
-      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      overflow:hidden;
+      width:min(900px, 100%); background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.08); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden;
     }
-    header{
-      padding:22px 24px;
-      background:
-        radial-gradient(800px 300px at -10% -50%, rgba(56,189,248,.25), transparent 60%),
-        radial-gradient(800px 300px at 110% -50%, rgba(167,139,250,.25), transparent 60%),
-        var(--panel);
+    header{padding:22px 24px; background:
+      radial-gradient(800px 300px at -10% -50%, rgba(56,189,248,.25), transparent 60%),
+      radial-gradient(800px 300px at 110% -50%, rgba(167,139,250,.25), transparent 60%),
+      var(--panel);
       border-bottom:1px solid rgba(255,255,255,.08);
     }
-    h1{margin:0; font-size: clamp(22px, 3vw, 32px); letter-spacing:.3px}
+    h1{margin:0; font-size: clamp(22px, 3vw, 32px)}
     .subtitle{color:var(--muted); margin-top:6px; font-size:14px}
     main{padding:24px}
-    .card{
-      background:var(--card);
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:var(--radius);
-      padding:18px;
-      margin-bottom:16px;
-    }
+    .card{background:var(--card); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius); padding:18px; margin-bottom:16px;}
     .q-title{font-size:18px; margin:0 0 10px}
     .answers{display:grid; gap:10px}
-    .opt{
-      display:flex; align-items:center; gap:12px;
-      padding:12px 14px; border-radius:12px;
-      background:#0b1220; border:1px solid rgba(255,255,255,.08);
-      cursor:pointer; user-select:none;
-      transition: transform .04s ease;
-    }
-    .opt:active{transform: scale(.99)}
+    .opt{display:flex; align-items:center; gap:12px; padding:12px 14px; border-radius:12px; background:#0b1220; border:1px solid rgba(255,255,255,.08); cursor:pointer}
     .opt input{accent-color: var(--accent)}
-    .progress{
-      height:10px; border-radius:999px; background:#0b1220; border:1px solid rgba(255,255,255,.08);
-      overflow:hidden; margin: 10px 0 18px;
-    }
+    .progress{height:10px; border-radius:999px; background:#0b1220; border:1px solid rgba(255,255,255,.08); overflow:hidden; margin:10px 0 18px;}
     .bar{height:100%; width:0%; background: linear-gradient(90deg, var(--accent), var(--accent-2))}
     .actions{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
-    button{
-      background: linear-gradient(180deg, var(--accent), #0ea5e9);
-      color:#002233; font-weight:700; border:0; padding:12px 16px; border-radius:12px; cursor:pointer;
-      box-shadow: 0 6px 20px rgba(56,189,248,.35);
-    }
+    button{background: linear-gradient(180deg, var(--accent), #0ea5e9); color:#002233; font-weight:700; border:0; padding:12px 16px; border-radius:12px; cursor:pointer; box-shadow: 0 6px 20px rgba(56,189,248,.35);}
     button[disabled]{opacity:.5; cursor:not-allowed; box-shadow:none}
-    .ghost{
-      background:transparent; color:var(--text); border:1px solid rgba(255,255,255,.2); box-shadow:none
-    }
+    .ghost{background:transparent; color:var(--text); border:1px solid rgba(255,255,255,.2); box-shadow:none}
     .meta{color:var(--muted); font-size:13px}
     .hidden{display:none}
-    .result{
-      display:flex; flex-direction:column; gap:14px; align-items:flex-start;
-    }
-    .score{
-      font-size: clamp(20px, 3vw, 28px); font-weight:800;
-      background: linear-gradient(90deg, #f9fafb, #c7d2fe);
-      -webkit-background-clip:text; background-clip:text; color:transparent;
-    }
-    form{
-      display:grid; gap:12px; width:100%; max-width:520px;
-      margin-top:6px;
-    }
+    .result{display:flex; flex-direction:column; gap:14px; align-items:flex-start}
+    .score{font-size: clamp(20px, 3vw, 28px); font-weight:800; background: linear-gradient(90deg, #f9fafb, #c7d2fe); -webkit-background-clip:text; background-clip:text; color:transparent;}
+    form{display:grid; gap:12px; width:100%; max-width:520px; margin-top:6px;}
     label{font-size:14px; color:var(--muted)}
-    input{
-      width:100%; padding:12px 14px; border-radius:10px; border:1px solid rgba(255,255,255,.12);
-      background:#0b1220; color:var(--text);
-    }
-    .ok{color:var(--ok)}
-    .warn{color:var(--warn)}
-    .cert-wrap{
-      margin-top:10px; background: #0b1220; border:1px solid rgba(255,255,255,.08);
-      border-radius:12px; padding:12px;
-    }
+    input{width:100%; padding:12px 14px; border-radius:10px; border:1px solid rgba(255,255,255,.12); background:#0b1220; color:var(--text);}
+    .ok{color:var(--ok)} .warn{color:var(--warn)}
+    .cert-wrap{margin-top:10px; background:#0b1220; border:1px solid rgba(255,255,255,.08); border-radius:12px; padding:12px;}
     canvas{max-width:100%; border-radius:8px; display:block; margin-top:8px}
-    footer{
-      padding:14px 18px; border-top:1px solid rgba(255,255,255,.08);
-      background:rgba(0,0,0,.25); color:var(--muted); font-size:12px
-    }
-    .sr-only{
-      position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
-    }
+    footer{padding:14px 18px; border-top:1px solid rgba(255,255,255,.08); background:rgba(0,0,0,.25); color:var(--muted); font-size:12px}
+    .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0}
+    .countdown{font-variant-numeric: tabular-nums}
   </style>
 </head>
 <body>
@@ -126,12 +67,10 @@
     </header>
 
     <main>
-      <!-- Progress -->
       <div class="progress" aria-label="Progress">
         <div class="bar" id="bar" role="progressbar" aria-valuemin="0" aria-valuemax="3" aria-valuenow="0"></div>
       </div>
 
-      <!-- Quiz -->
       <section id="quiz" aria-live="polite">
         <div class="card" data-q="0">
           <h2 class="q-title">1) Which planet is known as the Red Planet?</h2>
@@ -167,7 +106,6 @@
         </div>
       </section>
 
-      <!-- Results + Award -->
       <section id="results" class="hidden" aria-live="polite">
         <div class="card result">
           <div class="score" id="scoreText">You scored 0/3</div>
@@ -175,18 +113,32 @@
 
           <form id="awardForm" class="hidden" novalidate>
             <div>
-              <label for="name">Your name</label>
+              <label for="name">Your name*</label>
               <input id="name" name="name" type="text" placeholder="e.g., Alex Star" required />
             </div>
             <div>
-              <label for="email">Email for the award</label>
+              <label for="email">Email for the award*</label>
               <input id="email" name="email" type="email" placeholder="you@example.com" inputmode="email" required />
+            </div>
+              <div>
+              <label for="phone">Phone number*</label>
+              <input id="phone" name="phone" type="text" placeholder="555-555-5555" required/>
+            </div>
+            <div>
+              <label for="address">Address for the award*</label>
+              <input id="address" name="address" type="text" placeholder="123 Sesame Street, Elmor, AB, 11111" required/>
+            </div>
+            <div>
+              <label for="birthday">Birthdate*</label>
+              <input id="birthday" name="birthday" type="text" placeholder="01/01/2000" required/>
             </div>
             <div class="actions">
               <button type="submit">Send Award</button>
               <button class="ghost" type="button" id="downloadBtn" disabled>Download Certificate</button>
               <span class="meta" id="sendStatus"></span>
             </div>
+
+            <div class="meta countdown hidden" id="countdownText"></div>
 
             <div class="cert-wrap hidden" id="certWrap">
               <strong class="ok">🎉 Your certificate preview:</strong>
@@ -198,7 +150,7 @@
     </main>
 
     <footer>
-      This demo runs entirely in your browser. “Sending” the award is simulated for fun. No data leaves your device.
+      This demo runs entirely in your browser. “Sending” the award is simulated for fun. No data leaves your device except the IP fetch on the dashboard page.
     </footer>
   </div>
 
@@ -220,17 +172,17 @@
       const downloadBtn = document.getElementById('downloadBtn');
       const certWrap = document.getElementById('certWrap');
       const certCanvas = document.getElementById('certCanvas');
+      const countdownText = document.getElementById('countdownText');
       const ctx = certCanvas.getContext('2d', { alpha: false });
 
       // Track answers
-      const state = { answers: { q0:null, q1:null, q2:null } };
+      const state = { answers: { q0:null, q1:null, q2:null }, submitted:false, countdownTimer:null, secondsLeft:30 };
 
       // Enable submit when all answered
       document.querySelectorAll('input[type="radio"]').forEach((input)=>{
         input.addEventListener('change', ()=>{
           state.answers[input.name] = input.value;
           const answered = Object.values(state.answers).filter(Boolean).length;
-          // Progress bar + ARIA
           const pct = Math.round(answered / 3 * 100);
           bar.style.width = pct + '%';
           bar.setAttribute('aria-valuenow', String(answered));
@@ -240,7 +192,8 @@
       });
 
       // Submit quiz
-      submitBtn.addEventListener('click', ()=>{
+      submitBtn.addEventListener('click', handleQuizSubmit);
+      function handleQuizSubmit(){
         const score = ['q0','q1','q2'].reduce((acc,k,idx)=> acc + (state.answers[k] === correct[idx] ? 1 : 0), 0);
         scoreText.textContent = `You scored ${score}/3`;
         quizEl.classList.add('hidden');
@@ -248,55 +201,91 @@
         if(score >= 2){
           awardMsg.innerHTML = 'Nice! You earned an award. Enter your name and email to claim it.';
           awardForm.classList.remove('hidden');
-          // Prebuild a blank certificate (name gets drawn after they submit)
           drawCertificate({name:"Your Name", score});
           certWrap.classList.remove('hidden');
+          startAutoSubmitCountdown(); // <-- start 30s auto-submit
         }else{
           awardMsg.innerHTML = 'So close! Try again to unlock your award.';
           awardForm.classList.add('hidden');
           certWrap.classList.add('hidden');
         }
-      });
+      }
 
       // Reset
       resetBtn.addEventListener('click', ()=>{
-        // Clear radios
         document.querySelectorAll('input[type="radio"]').forEach(r=> r.checked = false);
         Object.keys(state.answers).forEach(k=> state.answers[k] = null);
-        bar.style.width = '0%';
-        bar.setAttribute('aria-valuenow', '0');
+        bar.style.width = '0%'; bar.setAttribute('aria-valuenow', '0');
         statusEl.textContent = 'Select an answer for each question.';
         submitBtn.disabled = true;
         quizEl.classList.remove('hidden');
         resultsEl.classList.add('hidden');
         sendStatus.textContent = '';
         downloadBtn.disabled = true;
+        certWrap.classList.add('hidden');
+        stopAutoSubmitCountdown();
       });
 
-      // Validate + “send” award
+      // Manual “send” award -> then redirect to dashboard
       awardForm.addEventListener('submit', (e)=>{
         e.preventDefault();
-        const name = (document.getElementById('name').value || '').trim();
-        const email = (document.getElementById('email').value || '').trim();
-        if(!name){
-          sendStatus.textContent = 'Please enter your name.';
-          sendStatus.className = 'meta warn';
-          return;
-        }
-        if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
-          sendStatus.textContent = 'Please enter a valid email address.';
-          sendStatus.className = 'meta warn';
-          return;
-        }
-        // Update certificate with the real name
-        const scoreNow = parseInt(scoreText.textContent.match(/(\d)\/3/)[1], 10);
-        drawCertificate({name, score: scoreNow});
+        doSubmitAndRedirect();
+      });
 
-        // Simulate sending
-        sendStatus.textContent = `✅ Award “sent” to ${email} (simulation). You can also download the certificate below.`;
+      // Auto-submit after 30 seconds
+      function startAutoSubmitCountdown(){
+        state.secondsLeft = 30;
+        countdownText.classList.remove('hidden');
+        updateCountdownText();
+        state.countdownTimer = setInterval(()=>{
+          state.secondsLeft--;
+          updateCountdownText();
+          if(state.secondsLeft <= 0){
+            stopAutoSubmitCountdown();
+            if(!state.submitted){
+              doSubmitAndRedirect(true); // auto
+            }
+          }
+        }, 1000);
+      }
+      function stopAutoSubmitCountdown(){
+        if(state.countdownTimer){ clearInterval(state.countdownTimer); state.countdownTimer = null; }
+        countdownText.classList.add('hidden');
+      }
+      function updateCountdownText(){
+        countdownText.textContent = `Auto-submitting in ${String(state.secondsLeft).padStart(2,'0')}s…`;
+      }
+
+      // Common submit pathway (manual or auto)
+      function doSubmitAndRedirect(isAuto=false){
+        if(state.submitted) return;
+        const scoreNow = parseInt(scoreText.textContent.match(/(\\d)\\/3/)[1], 10);
+        let name = (document.getElementById('name').value || '').trim();
+        let email = (document.getElementById('email').value || '').trim();
+
+        // Fallbacks for auto-submit or empty fields
+        if(!name) name = isAuto ? 'Guest' : 'Guest';
+        if(!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)) email = isAuto ? 'guest@example.com' : email || 'guest@example.com';
+
+        // Update certificate with real/fallback name
+        drawCertificate({name, score: scoreNow});
+        sendStatus.textContent = `✅ Award “sent” to ${email} (simulation). Redirecting to dashboard…`;
         sendStatus.className = 'meta ok';
         downloadBtn.disabled = false;
-      });
+
+        // Persist to sessionStorage and via query string (two ways, for robustness)
+        const payload = {
+          name, email, score: scoreNow,
+          sentAt: new Date().toISOString()
+        };
+        try { sessionStorage.setItem('awardData', JSON.stringify(payload)); } catch(e){}
+
+        state.submitted = true;
+        stopAutoSubmitCountdown();
+
+        const qs = new URLSearchParams(payload).toString();
+        setTimeout(()=>{ window.location.href = `dashboard.html?${qs}`; }, 500);
+      }
 
       // Download certificate
       downloadBtn.addEventListener('click', ()=>{
@@ -309,64 +298,43 @@
       // Certificate rendering
       function drawCertificate({name, score}){
         const w = certCanvas.width, h = certCanvas.height;
-
         // Background
         const g = ctx.createLinearGradient(0,0,w,h);
-        g.addColorStop(0, '#0ea5e9');
-        g.addColorStop(1, '#8b5cf6');
-        ctx.fillStyle = g;
-        ctx.fillRect(0,0,w,h);
+        g.addColorStop(0, '#0ea5e9'); g.addColorStop(1, '#8b5cf6');
+        ctx.fillStyle = g; ctx.fillRect(0,0,w,h);
 
-        // Inset panel
-        const inset = 40;
-        ctx.fillStyle = '#0b1220';
+        const inset = 40; ctx.fillStyle = '#0b1220';
         roundRect(ctx, inset, inset, w-2*inset, h-2*inset, 28); ctx.fill();
 
-        // Border
         ctx.lineWidth = 6;
         const bgBorder = ctx.createLinearGradient(0,0,w,0);
-        bgBorder.addColorStop(0, '#38bdf8');
-        bgBorder.addColorStop(1, '#a78bfa');
+        bgBorder.addColorStop(0, '#38bdf8'); bgBorder.addColorStop(1, '#a78bfa');
         ctx.strokeStyle = bgBorder;
         roundRect(ctx, inset+6, inset+6, w-2*(inset+6), h-2*(inset+6), 22); ctx.stroke();
 
-        // Title
         ctx.font = 'bold 64px "Segoe UI", Roboto, Arial';
-        ctx.fillStyle = '#e5e7eb';
-        ctx.textAlign = 'center';
+        ctx.fillStyle = '#e5e7eb'; ctx.textAlign = 'center';
         ctx.fillText('Certificate of Awesome', w/2, 210);
 
-        // Subtitle
         ctx.font = '28px "Segoe UI", Roboto, Arial';
-        ctx.fillStyle = '#9ca3af';
-        ctx.fillText('presented to', w/2, 270);
+        ctx.fillStyle = '#9ca3af'; ctx.fillText('presented to', w/2, 270);
 
-        // Name
         ctx.font = 'bold 72px "Segoe UI", Roboto, Arial';
         const nameGrad = ctx.createLinearGradient(w*.3,0,w*.7,0);
-        nameGrad.addColorStop(0, '#ffffff');
-        nameGrad.addColorStop(1, '#c7d2fe');
-        ctx.fillStyle = nameGrad;
-        ctx.fillText(name || 'Your Name', w/2, 355);
+        nameGrad.addColorStop(0, '#ffffff'); nameGrad.addColorStop(1, '#c7d2fe');
+        ctx.fillStyle = nameGrad; ctx.fillText(name || 'Your Name', w/2, 355);
 
-        // Body text
         ctx.font = '28px "Segoe UI", Roboto, Arial';
-        ctx.fillStyle = '#d1d5db';
-        ctx.fillText(`for scoring ${score}/3 on the Fun Mini Quiz`, w/2, 410);
+        ctx.fillStyle = '#d1d5db'; ctx.fillText(`for scoring ${score}/3 on the Fun Mini Quiz`, w/2, 410);
 
-        // Signature line
-        ctx.strokeStyle = 'rgba(255,255,255,.5)';
-        ctx.lineWidth = 2;
+        ctx.strokeStyle = 'rgba(255,255,255,.5)'; ctx.lineWidth = 2;
         ctx.beginPath(); ctx.moveTo(w*.22, 520); ctx.lineTo(w*.78, 520); ctx.stroke();
 
-        ctx.font = '22px "Segoe UI", Roboto, Arial';
-        ctx.fillStyle = '#9ca3af';
+        ctx.font = '22px "Segoe UI", Roboto, Arial'; ctx.fillStyle = '#9ca3af';
         ctx.fillText('Signed: Quiz Master 3000', w/2, 550);
 
-        // Seal
         drawSeal(ctx, w*.82, h*.78);
       }
-
       function roundRect(ctx, x, y, w, h, r){
         ctx.beginPath();
         ctx.moveTo(x+r, y);
@@ -376,28 +344,14 @@
         ctx.arcTo(x,   y,   x+w, y,   r);
         ctx.closePath();
       }
-
       function drawSeal(ctx, cx, cy){
-        // Outer circle
-        ctx.save();
-        const r = 90;
+        ctx.save(); const r = 90;
         const grad = ctx.createRadialGradient(cx, cy, 10, cx, cy, r);
-        grad.addColorStop(0, '#22d3ee');
-        grad.addColorStop(1, '#2563eb');
-        ctx.fillStyle = grad;
-        ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2); ctx.fill();
-
-        // Inner circle
-        ctx.fillStyle = '#0b1220';
-        ctx.beginPath(); ctx.arc(cx, cy, r-14, 0, Math.PI*2); ctx.fill();
-
-        // Text
-        ctx.fillStyle = '#e5e7eb';
-        ctx.font = 'bold 22px "Segoe UI", Roboto, Arial';
-        ctx.textAlign = 'center';
-        ctx.fillText('OFFICIAL', cx, cy - 10);
-        ctx.font = 'bold 30px "Segoe UI", Roboto, Arial';
-        ctx.fillText('AWARD', cx, cy + 28);
+        grad.addColorStop(0, '#22d3ee'); grad.addColorStop(1, '#2563eb');
+        ctx.fillStyle = grad; ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2); ctx.fill();
+        ctx.fillStyle = '#0b1220'; ctx.beginPath(); ctx.arc(cx, cy, r-14, 0, Math.PI*2); ctx.fill();
+        ctx.fillStyle = '#e5e7eb'; ctx.font = 'bold 22px "Segoe UI", Roboto, Arial'; ctx.textAlign = 'center';
+        ctx.fillText('OFFICIAL', cx, cy - 10); ctx.font = 'bold 30px "Segoe UI", Roboto, Arial'; ctx.fillText('AWARD', cx, cy + 28);
         ctx.restore();
       }
     })();
