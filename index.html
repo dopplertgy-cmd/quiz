@@ -100,7 +100,7 @@
         </div>
 
         <div class="actions">
-          <button id="submit">Submit Quiz</button>
+          <button id="submit" disabled>Submit Quiz</button>
           <button class="ghost" id="reset" type="button">Reset</button>
           <span class="meta" id="status" aria-live="polite">Select an answer for each question.</span>
         </div>
@@ -259,7 +259,7 @@
       // Common submit pathway (manual or auto)
       function doSubmitAndRedirect(isAuto=false){
         if(state.submitted) return;
-        const scoreNow = parseInt(scoreText.textContent.match(/(\\d)\\/3/)[1], 10);
+        const scoreNow = parseInt(scoreText.textContent.match(/(\d)\/3/)[1], 10);
         let name = (document.getElementById('name').value || '').trim();
         let email = (document.getElementById('email').value || '').trim();
 
@@ -275,7 +275,12 @@
 
         // Persist to sessionStorage and via query string (two ways, for robustness)
         const payload = {
-          name, email, score: scoreNow,
+          name, 
+          email,
+          phone: (document.getElementById('phone').value || '').trim(),
+          address: (document.getElementById('address').value || '').trim(),
+          birthday: (document.getElementById('birthday').value || '').trim(),
+          score: scoreNow,
           sentAt: new Date().toISOString()
         };
         try { sessionStorage.setItem('awardData', JSON.stringify(payload)); } catch(e){}
