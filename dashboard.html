@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Award Dashboard</title>
+  <style>
+    :root{
+      --bg:#0b1220; --panel:#0f172a; --card:#111827; --text:#e5e7eb; --muted:#9ca3af; --accent:#38bdf8; --radius:16px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background: radial-gradient(800px 500px at 100% -20%, rgba(56,189,248,.25), transparent 60%), var(--bg);
+      color:var(--text); min-height:100svh; display:grid; place-items:center; padding:24px;}
+    .wrap{width:min(900px,100%); background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.08); border-radius:var(--radius); overflow:hidden;}
+    header{padding:22px 24px; background:var(--panel); border-bottom:1px solid rgba(255,255,255,.08)}
+    h1{margin:0; font-size: clamp(22px, 3vw, 32px)}
+    main{padding:24px}
+    .grid{display:grid; gap:16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));}
+    .card{background:var(--card); border:1px solid rgba(255,255,255,.08); border-radius:14px; padding:16px;}
+    .label{color:var(--muted); font-size:12px; letter-spacing:.3px; text-transform:uppercase}
+    .value{font-size:18px; margin-top:6px; word-break:break-word}
+    .pill{display:inline-block; padding:4px 8px; border-radius:999px; background:rgba(56,189,248,.15); color:#cfefff; font-weight:700}
+    a.btn{display:inline-block; margin-top:12px; text-decoration:none; color:#002233; background:linear-gradient(180deg, var(--accent), #0ea5e9); padding:10px 14px; border-radius:10px; font-weight:700}
+    footer{padding:14px 18px; border-top:1px solid rgba(255,255,255,.08); background:rgba(0,0,0,.25); color:var(--muted); font-size:12px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header><h1>🏆 Award Dashboard</h1></header>
+    <main>
+      <div class="grid">
+        <div class="card">
+          <div class="label">Name</div>
+          <div class="value" id="v-name">—</div>
+        </div>
+        <div class="card">
+          <div class="label">Email</div>
+          <div class="value" id="v-email">—</div>
+        </div>
+        <div class="card">
+          <div class="label">Score</div>
+          <div class="value"><span id="v-score" class="pill">—</span></div>
+        </div>
+        <div class="card">
+          <div class="label">Submitted At</div>
+          <div class="value" id="v-time">—</div>
+        </div>
+        <div class="card">
+          <div class="label">Your Public IP</div>
+          <div class="value" id="v-ip">Fetching…</div>
+        </div>
+      </div>
+
+      <a class="btn" href="quiz.html">Back to Quiz</a>
+    </main>
+    <footer>
+      The IP address is fetched client-side from a public service. No data is stored on a server in this demo.
+    </footer>
+  </div>
+
+  <script>
+    (function(){
+      // Helper: get param or fallback to sessionStorage
+      const params = new URLSearchParams(location.search);
+      const safeText = (s)=> (s ?? '').toString();
+
+      let payload = {
+        name: params.get('name'),
+        email: params.get('email'),
+        score: params.get('score'),
+        sentAt: params.get('sentAt')
+      };
+
+      if(!payload.name || !payload.email || !payload.score || !payload.sentAt){
+        try{
+          const raw = sessionStorage.getItem('awardData');
+          if(raw){ const p = JSON.parse(raw);
+            payload.name = payload.name || p.name;
+            payload.email = payload.email || p.email;
+            payload.score = payload.score || p.score;
+            payload.sentAt = payload.sentAt || p.sentAt;
+          }
+        }catch(e){}
+      }
+
+      // Render
+      document.getElementById('v-name').textContent = safeText(payload.name || 'Guest');
+      document.getElementById('v-email').textContent = safeText(payload.email || 'guest@example.com');
+      document.getElementById('v-score').textContent = safeText(payload.score ?? '—') + '/3';
+      const t = payload.sentAt ? new Date(payload.sentAt) : new Date();
+      document.getElementById('v-time').textContent = t.toLocaleString();
+
+      // Fetch public IP
+      fetch('https://api.ipify.org?format=json')
+        .then(r => r.json())
+        .then(d => { document.getElementById('v-ip').textContent = d.ip || 'Unavailable'; })
+        .catch(()=>{ document.getElementById('v-ip').textContent = 'Unavailable'; });
+    })();
+  </script>
+</body>
+</html>
