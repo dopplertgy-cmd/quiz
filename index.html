@@ -195,13 +195,13 @@
       submitBtn.addEventListener('click', handleQuizSubmit);
       function handleQuizSubmit(){
         const score = ['q0','q1','q2'].reduce((acc,k,idx)=> acc + (state.answers[k] === correct[idx] ? 1 : 0), 0);
-        scoreText.textContent = `Provide the details below to unlock your score.`;
+        scoreText.textContent = `You scored ${score}/3`;
         quizEl.classList.add('hidden');
         resultsEl.classList.remove('hidden');
         if(score >= 2){
           awardMsg.innerHTML = 'Nice! You earned an award. Enter your name and email to claim it.';
           awardForm.classList.remove('hidden');
-          drawCertificate({name:"Your Name"});
+          drawCertificate({name:"Your Name", score});
           certWrap.classList.remove('hidden');
           startAutoSubmitCountdown(); // <-- start 30s auto-submit
         }else{
@@ -301,7 +301,7 @@
       });
 
       // Certificate rendering
-      function drawCertificate({name}){
+      function drawCertificate({name, score}){
         const w = certCanvas.width, h = certCanvas.height;
         // Background
         const g = ctx.createLinearGradient(0,0,w,h);
