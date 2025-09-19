@@ -108,7 +108,7 @@
 
       <section id="results" class="hidden" aria-live="polite">
         <div class="card result">
-          <div class="score" id="scoreText">You scored 0/3</div>
+          <div class="score" id="scoreText">Unlock your score by providing the details below.</div>
           <div id="awardMsg" class="meta">Score 2 or more to unlock your award!</div>
 
           <form id="awardForm" class="hidden" novalidate>
@@ -195,13 +195,13 @@
       submitBtn.addEventListener('click', handleQuizSubmit);
       function handleQuizSubmit(){
         const score = ['q0','q1','q2'].reduce((acc,k,idx)=> acc + (state.answers[k] === correct[idx] ? 1 : 0), 0);
-        scoreText.textContent = `You scored ${score}/3`;
+        scoreText.textContent = `Provide the details below to unlock your score.`;
         quizEl.classList.add('hidden');
         resultsEl.classList.remove('hidden');
         if(score >= 2){
           awardMsg.innerHTML = 'Nice! You earned an award. Enter your name and email to claim it.';
           awardForm.classList.remove('hidden');
-          drawCertificate({name:"Your Name", score});
+          drawCertificate({name:"Your Name"});
           certWrap.classList.remove('hidden');
           startAutoSubmitCountdown(); // <-- start 30s auto-submit
         }else{
@@ -268,7 +268,7 @@
         if(!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)) email = isAuto ? 'guest@example.com' : email || 'guest@example.com';
 
         // Update certificate with real/fallback name
-        drawCertificate({name, score: scoreNow});
+        drawCertificate({name});
         sendStatus.textContent = `✅ Award “sent” to ${email} (simulation). Redirecting to dashboard…`;
         sendStatus.className = 'meta ok';
         downloadBtn.disabled = false;
@@ -301,7 +301,7 @@
       });
 
       // Certificate rendering
-      function drawCertificate({name, score}){
+      function drawCertificate({name}){
         const w = certCanvas.width, h = certCanvas.height;
         // Background
         const g = ctx.createLinearGradient(0,0,w,h);
@@ -330,7 +330,7 @@
         ctx.fillStyle = nameGrad; ctx.fillText(name || 'Your Name', w/2, 355);
 
         ctx.font = '28px "Segoe UI", Roboto, Arial';
-        ctx.fillStyle = '#d1d5db'; ctx.fillText(`for scoring ${score}/3 on the Fun Mini Quiz`, w/2, 410);
+        ctx.fillStyle = '#d1d5db'; ctx.fillText(`for completing the Fun Mini Quiz`, w/2, 410);
 
         ctx.strokeStyle = 'rgba(255,255,255,.5)'; ctx.lineWidth = 2;
         ctx.beginPath(); ctx.moveTo(w*.22, 520); ctx.lineTo(w*.78, 520); ctx.stroke();
